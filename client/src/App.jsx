@@ -54,10 +54,7 @@ const App = () => {
           }
         />
 
-        <Route
-          path="/register"
-          element={<Register data={data} setdata={setData} />}
-        />
+        <Route path="/" element={<Register data={data} setdata={setData} />} />
 
         <Route
           path="/edit"
