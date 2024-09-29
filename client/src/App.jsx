@@ -6,36 +6,40 @@ import { Route, Routes } from "react-router-dom";
 
 const App = () => {
   const [data, setData] = useState([]);
-  const [newIndex, setNewIndex] = useState("");
+  const [newIndex, setNewIndex] = useState(null); // Changed to null for clarity
 
+  // Form state for editing
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [contactNo, setContactNo] = useState("");
   const [task, setTask] = useState("");
 
+  // Load data from local storage
   useEffect(() => {
-    const dta = JSON.parse(localStorage.getItem("storedData"));
-
-    setData(dta);
-    console.log("get data", dta);
+    const storedData = JSON.parse(localStorage.getItem("storedData"));
+    setData(storedData || []); // Default to an empty array if null
+    console.log("get data", storedData);
   }, []);
+
+  // Save data to local storage
   useEffect(() => {
     localStorage.setItem("storedData", JSON.stringify(data));
     console.log("set data success");
   }, [data]);
 
-  const handelEdit = (index) => {
-    setName(data[index.index].name);
-    setAddress(data[index.index].address);
-    setContactNo(data[index.index].contactNo);
-    setTask(data[index.index].task);
-
-    setNewIndex(index.index);
+  // Handle edit logic
+  const handleEdit = (index) => {
+    const item = data[index]; // Directly access the item
+    setName(item.name);
+    setAddress(item.address);
+    setContactNo(item.contactNo);
+    setTask(item.task);
+    setNewIndex(index); // Store the index directly
   };
 
+  // Handle delete logic
   const handleDelete = (index) => {
-    const newData = [...data];
-    newData.splice(index.index, 1);
+    const newData = data.filter((_, i) => i !== index); // More concise deletion
     setData(newData);
   };
 
@@ -48,14 +52,12 @@ const App = () => {
             <Tabels
               data={data}
               setData={setData}
-              handelEdit={handelEdit}
+              handleEdit={handleEdit}
               handleDelete={handleDelete}
             />
           }
         />
-
         <Route path="/" element={<Register data={data} setdata={setData} />} />
-
         <Route
           path="/edit"
           element={

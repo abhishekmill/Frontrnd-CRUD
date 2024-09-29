@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Tabels = ({ data, setData, handelEdit, handleDelete }) => {
+const Tabels = ({ data, setData, handleEdit, handleDelete }) => {
   const navigate = useNavigate();
+
   useEffect(() => {
-    console.log(data);
-  });
+    console.log("Data:", data);
+  }, [data]); // Log only when data changes
 
   return (
     <div className="p-5">
@@ -34,7 +35,6 @@ const Tabels = ({ data, setData, handelEdit, handleDelete }) => {
             </tr>
           </thead>
           <tbody>
-            {/* --------------------------------map---------- */}
             {data.map((item, index) => (
               <tr
                 key={index}
@@ -50,29 +50,30 @@ const Tabels = ({ data, setData, handelEdit, handleDelete }) => {
                 <td className="px-6 py-4">{item.address}</td>
                 <td className="px-6 py-4">{item.task}</td>
                 <td
-                  key={index}
                   onClick={() => {
-                    handelEdit({ index });
+                    handleEdit(index);
                     navigate("/edit");
                   }}
-                  className="px-6 bg-slate-900 py-4  hover:bg-slate-500 "
+                  className="px-6 bg-slate-900 py-4 hover:bg-slate-500 cursor-pointer"
                 >
-                  Edit Btn
+                  Edit
                 </td>
-
-                {/* //delete */}
                 <td
                   onClick={() => {
-                    handleDelete({ index });
+                    if (
+                      window.confirm(
+                        "Are you sure you want to delete this item?"
+                      )
+                    ) {
+                      handleDelete(index);
+                    }
                   }}
-                  className="px-6 bg-slate-900 py-4  hover:bg-slate-500 "
+                  className="px-6 bg-slate-900 py-4 hover:bg-slate-500 cursor-pointer"
                 >
                   Delete
                 </td>
               </tr>
             ))}
-
-            {/* ------------------map------------- */}
           </tbody>
         </table>
       </div>

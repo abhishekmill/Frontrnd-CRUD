@@ -29,15 +29,17 @@ const Register = ({ data, setdata }) => {
 
     // Use the functional form of setdata to ensure you're working with the latest state
 
-    setdata((prevData) => [
-      ...prevData,
-      {
-        name,
-        address,
-        contactNo,
-        task,
-      },
-    ]);
+    if (Array.isArray(data)) {
+      setdata((prevData) => [
+        ...prevData,
+        {
+          name,
+          address,
+          contactNo,
+          task,
+        },
+      ]);
+    }
 
     setName("");
     setAddress("");

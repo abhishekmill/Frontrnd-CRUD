@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const Edit = ({
@@ -14,22 +14,22 @@ const Edit = ({
   setTask,
   task,
 }) => {
-  // const [newname, setNewName] = useState("");
-  // const [newaddress, setNewAddress] = useState("");
-  // const [newcontactNo, setNewContactNo] = useState("");
   const navigate = useNavigate();
 
   const editBtn2 = (event) => {
     event.preventDefault();
 
-    const newData = [...data];
-    newData[newIndex] = {
-      name,
-      address,
-      contactNo,
-      task,
-    };
-    setData(newData);
+    if (Array.isArray(data)) {
+      const newData = [...data];
+      newData[newIndex] = {
+        name,
+        address,
+        contactNo,
+        task,
+      };
+      setData(newData);
+    }
+    // Clear input fields after submission
     setAddress("");
     setContactNo("");
     setName("");
@@ -47,12 +47,7 @@ const Edit = ({
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form
-            onSubmit={editBtn2}
-            className="space-y-6"
-            action="#"
-            method="POST"
-          >
+          <form onSubmit={editBtn2} className="space-y-6">
             <div>
               <label className="block text-sm font-medium leading-6 text-gray-900">
                 Name
@@ -61,9 +56,9 @@ const Edit = ({
                 <input
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  id="name" // Changed ID to 'name'
-                  name="name" // Changed name to 'name'
-                  type="text" // Changed type to 'text'
+                  id="name"
+                  name="name"
+                  type="text"
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -78,9 +73,9 @@ const Edit = ({
                 <input
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
-                  id="address" // Updated ID
-                  name="address" // Updated name
-                  type="text" // Changed type to 'text'
+                  id="address"
+                  name="address"
+                  type="text"
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -95,9 +90,9 @@ const Edit = ({
                 <input
                   value={contactNo}
                   onChange={(e) => setContactNo(e.target.value)}
-                  id="contactNo" // Updated ID
-                  name="contactNo" // Updated name
-                  type="text" // Changed type to 'text'
+                  id="contactNo"
+                  name="contactNo"
+                  type="text"
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -106,15 +101,15 @@ const Edit = ({
 
             <div>
               <label className="block text-sm font-medium leading-6 text-gray-900">
-                Contact No.
+                Task
               </label>
               <div className="mt-2">
                 <input
                   value={task}
                   onChange={(e) => setTask(e.target.value)}
-                  id="contactNo" // Updated ID
-                  name="contactNo" // Updated name
-                  type="text" // Changed type to 'text'
+                  id="task"
+                  name="task"
+                  type="text"
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -126,7 +121,7 @@ const Edit = ({
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Submit {/* Fixed typo */}
+                Submit
               </button>
             </div>
           </form>
